@@ -67,9 +67,6 @@ export const products = [
     fullDescription: "Brew fresh coffee quickly with this compact machine.",
     specs: ["Fast brewing", "Reusable filter", "Compact design"],
   },
-
-  // 7–30
-
   {
     id: "7",
     title: "Bluetooth Speaker",
