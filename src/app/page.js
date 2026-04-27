@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { products } from "@/data/products";
 
 const features = [
   {
@@ -29,6 +30,8 @@ const testimonials = [
 ];
 
 export default function Home() {
+  const featuredProducts = products.slice(0, 3);
+
   return (
     <main className="bg-slate-50 text-slate-900">
       {/* Hero Section */}
@@ -37,9 +40,11 @@ export default function Home() {
           <p className="text-blue-600 font-semibold mb-3">
             Modern Product Showcase
           </p>
+
           <h1 className="text-4xl md:text-6xl font-bold leading-tight">
             Manage and explore products beautifully.
           </h1>
+
           <p className="mt-5 text-slate-600 text-lg">
             ProductHub helps you showcase items, view details, filter products,
             and manage your own product collection.
@@ -48,13 +53,14 @@ export default function Home() {
           <div className="mt-8 flex gap-4">
             <Link
               href="/items"
-              className="px-6 py-3 rounded-lg bg-blue-600 text-white transition hover:bg-blue-700 active:scale-95 font-medium"
+              className="px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 active:scale-95 transition"
             >
               Explore Items
             </Link>
+
             <Link
               href="/about"
-              className="px-6 py-3 rounded-lg border border-slate-300 font-medium hover:bg-white"
+              className="px-6 py-3 rounded-lg border border-slate-300 font-medium hover:bg-white transition"
             >
               Learn More
             </Link>
@@ -68,7 +74,55 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Section */}
+      {/* Featured Products Section */}
+      <section className="max-w-7xl mx-auto px-4 py-14">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold">Featured Products</h2>
+          <p className="text-slate-600 mt-2">
+            Explore some of our most popular products.
+          </p>
+        </div>
+
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {featuredProducts.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white p-6 rounded-2xl shadow hover:shadow-lg hover:-translate-y-1 transition duration-300"
+            >
+              <div className="text-5xl mb-4">{item.image}</div>
+
+              <h3 className="text-xl font-semibold">{item.title}</h3>
+
+              <p className="text-slate-600 mt-2 line-clamp-2">
+                {item.shortDescription}
+              </p>
+
+              <div className="flex justify-between items-center mt-4">
+                <p className="font-medium">${item.price}</p>
+                <p className="text-sm text-slate-500">⭐ {item.rating}</p>
+              </div>
+
+              <Link
+                href={`/items/${item.id}`}
+                className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 active:scale-95 transition"
+              >
+                View Details
+              </Link>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-8">
+          <Link
+            href="/items"
+            className="inline-block px-6 py-3 rounded-lg border border-blue-600 text-blue-600 font-medium hover:bg-blue-600 hover:text-white transition"
+          >
+            View All Products
+          </Link>
+        </div>
+      </section>
+
+      {/* Features Section */}
       <section className="max-w-7xl mx-auto px-4 py-14">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold">Why ProductHub?</h2>
@@ -110,16 +164,18 @@ export default function Home() {
 
       {/* Banner Section */}
       <section className="max-w-7xl mx-auto px-4 py-14">
-        <div className="rounded-3xl bg-blue-600 text-white transition hover:bg-blue-700 active:scale-95 p-10 md:p-14 text-center">
+        <div className="rounded-3xl bg-blue-600 text-white p-10 md:p-14 text-center">
           <h2 className="text-3xl md:text-4xl font-bold">
             Ready to organize your products?
           </h2>
+
           <p className="mt-4 text-blue-100">
             Add, manage, view, and explore products from one clean interface.
           </p>
+
           <Link
             href="/items"
-            className="inline-block mt-7 px-6 py-3 rounded-lg bg-white text-blue-600 font-medium hover:bg-blue-50"
+            className="inline-block mt-7 px-6 py-3 rounded-lg bg-white text-blue-600 font-medium hover:bg-blue-50 active:scale-95 transition"
           >
             Browse Products
           </Link>
