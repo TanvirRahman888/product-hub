@@ -14,7 +14,6 @@ It allows users to explore products, view details, and manage their own products
 
 ## 📸 Screenshots
 
-> Add your screenshots inside a `/screenshots` folder in your repo, then link them like below:
 
 ### 🏠 Home Page
 ![Home](./screenshots/home.png)
