@@ -1,0 +1,116 @@
+"use client";
+
+import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+
+export default function LoginPage() {
+  const { login, googleLogin } = useAuth();
+  const router = useRouter();
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    try {
+      await login(email, password);
+      router.push("/");
+    } catch (err) {
+      setError("Invalid email or password.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setError("");
+    setLoading(true);
+
+    try {
+      await googleLogin();
+      router.push("/");
+    } catch (err) {
+      setError("Google login failed.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <main className="bg-slate-50 min-h-screen">
+      <section className="max-w-md mx-auto px-4 py-16">
+        <div className="bg-white rounded-3xl shadow p-8">
+          <div className="text-center mb-8">
+            <p className="text-blue-600 font-semibold">Welcome Back</p>
+            <h1 className="text-3xl font-bold mt-2">Login</h1>
+            <p className="text-slate-600 mt-2">
+              Login to manage your products.
+            </p>
+          </div>
+
+          {error && (
+            <p className="mb-4 bg-red-100 text-red-600 p-3 rounded-lg text-sm">
+              {error}
+            </p>
+          )}
+
+          <form onSubmit={handleLogin} className="space-y-5">
+            <div>
+              <label className="block font-medium mb-2">Email</label>
+              <input
+                name="email"
+                type="email"
+                required
+                placeholder="Enter your email"
+                className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              />
+            </div>
+
+            <div>
+              <label className="block font-medium mb-2">Password</label>
+              <input
+                name="password"
+                type="password"
+                required
+                placeholder="Enter your password"
+                className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 active:scale-95 transition disabled:opacity-60"
+            >
+              {loading ? "Logging in..." : "Login"}
+            </button>
+          </form>
+
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            disabled={loading}
+            className="w-full mt-4 border py-3 rounded-lg font-medium hover:bg-slate-100 active:scale-95 transition disabled:opacity-60"
+          >
+            Continue with Google
+          </button>
+
+          <p className="text-center text-slate-600 mt-6">
+            Don&apos;t have an account?{" "}
+            <Link href="/register" className="text-blue-600 font-medium">
+              Register
+            </Link>
+          </p>
+        </div>
+      </section>
+    </main>
+  );
+}
